@@ -1,0 +1,234 @@
+#setting working directory
+getwd()
+setwd("C:/Users/Abhishek/Desktop/R files")
+getwd()
+#importing dataset
+DATA<-read.csv(choose.files())
+DATA
+#DATA exploration 
+head(DATA)
+tail(DATA)
+str(DATA)
+summary(DATA)
+DATA[DATA$Rotten.Tomatoes.Ratings..==97,]
+#Changin column names
+colnames(DATA)
+colnames(DATA)<- c("Film","Genre","CriticRatings","AudienceRatings","BudgetMillions","Year")
+head(DATA)
+tail(DATA)
+str(DATA)
+summary(DATA)
+#Chaning YEAR into a factor
+factor(DATA$Year)
+DATA$Year<- factor(DATA$Year)
+str(DATA)
+
+#crating asthetics for vizualization
+library(ggplot2)
+ggplot(data=DATA,aes(x=CriticRatings,y=AudienceRatings))
+#adding geometry
+ggplot(data=DATA,aes(x=CriticRatings,y=AudienceRatings))+geom_point()
+#adding color
+ggplot(data=DATA,aes(x=CriticRatings,y=AudienceRatings,color=Genre))+geom_point()
+#adding size
+ggplot(data=DATA,aes(x=CriticRatings,y=AudienceRatings,color=Genre,size=BudgetMillions))+geom_point()
+
+#Plotting with layers
+p<-ggplot(data=DATA,aes(x=CriticRatings,y=AudienceRatings,color=Genre))#craeting the object for easy vizualization
++geom_point()
+#plotting with points
+p+geom_point()
+#plotting with lines
+p+geom_line()
+#plotting with multiple layers
+p+geom_line()+geom_point()
+p+geom_boxplot()
+p+geom_histogram()
+p+geom_point()
+#MAPPING asthetis
+#overide asthetics
+q<-ggplot(data=DATA,aes(x=CriticRatings,y=AudienceRatings,color=Genre,size=BudgetMillions))
+#Example 1
+q+geom_point()
+q+geom_point(aes(size=CriticRatings))
+#Example 2
+q+geom_point(aes(color=BudgetMillions))
+q+geom_point()
+#example 3
+q+geom_point(aes(color=Year))
+#example 4
+q+geom_boxplot(aes(color=Year))
+# new variable
+w<-ggplot(data=DATA,aes(x=Year,y=Genre,color=AudienceRatings,size=BudgetMillions))
+#example 5
+w+geom_point(aes(color=Year))
+#example 6 USing xlab() to change axis name
+w+geom_point(aes(x=BudgetMillions))+xlab("$$BudgetMillions$$")
+#SETTING asthetics
+w+geom_point()+geom_line()
+w+geom_point()+geom_line(size=1)
+w+geom_point(size=1)+geom_line()
+w+geom_line+geom_point()
+q+geom_point()+geom_line()
+q+geom_point()+geom_line()
+
+
+
+q+geom_point(aes(x=BudgetMillions))+xlab("$$BudgetMillions")
+
+#mapping vs setting
+
+r<-ggplot(data=DATA,aes(x=CriticRatings,y=AudienceRatings))
+r+geom_point()
+#adding color
+r+geom_point(aes(color=Genre))
+#setting
+r+geom_point(color="DarkGreen")
+r+geom_point(color="Green")
+r+geom_point(color="Pink")
+#ERROR CODE
+r+geom_point(aes(color="DarkGreen"))
+#Practice COde
+#Mapping
+r+geom_point(aes(Size=BudgetMillions))
+#Setting
+r+geom_point(size=10)
+r+geom_point(aes(size=10))
+#Histograms 
+s<-ggplot(data=DATA,aes(x=BudgetMillions))
+s+geom_histogram(binwidth = 30)
+#Add color to histogram
+s+geom_histogram(binwidth = 30,fill="Green")# setting
+s+geom_histogram(binwidth = 30,aes(fill=Genre))#Mapping
+#Adding borders
+s+geom_histogram(binwidth = 30,aes(fill=Genre),color="Black")#important chart
+
+#Density chart
+s+geom_density()
+s+geom_density(aes(fill=Genre),position="stack")
+
+#Starting layer tips
+#method 1
+t<-ggplot(data=DATA,aes(x=AudienceRatings))
+t+geom_histogram(binwidth = 10,fill="White",color="Blue")
+
+#method 2
+t<-ggplot(data=DATA)
+t+geom_histogram(binwidth = 10,aes(x=AudienceRatings),fill="White",color="Red")
+#method 3 (Skeleton Plot)
+t<-ggplot()
+
+
+
+#mapping vs setting
+u<-ggplot(data=DATA,aes(x=CriticRatings,y=AudienceRatings))
+u+geom_point() 
+colnames(DATA)
+#Add color with mapping
+u+geom_point(aes(color=Genre))
+#Add color with setting
+u+geom_point(color="DarkGreen")
+#ERROR!!!!
+u+geom_point(aes(color="DarkGreen"))
+#Mapping
+u+geom_point(aes(size=BudgetMillions))
+#Setting
+u+geom_point(size=1)
+#ERROR
+u+geom_point(aes(size=10))
+#Statitical transformations
+?geom_smooth
+#geom_smooth
+u<-ggplot(data=DATA,aes(x=CriticRatings,y=AudienceRatings, color=Genre))
+u+geom_point()+geom_smooth(fill=NA)
+ #boxplot
+v<-ggplot(data=DATA,aes(x=Genre,y=AudienceRatings, color=Genre))
+v+geom_boxplot()
+
+
+
+#statiscal transformations
+
+
+#geom_smooth
+?geom_smooth
+
+u<-ggplot(data = DATA,aes(x=CriticRatings,y=AudienceRatings, color= Genre))
+u+geom_point()+geom_smooth(fill=NA)
+
+#boxplot
+
+w<-ggplot(data=DATA,aes(x=Genre,y=AudienceRatings,color=Genre))
+w+geom_boxplot()
+w+geom_boxplot(size=1.2)
+
+w+geom_boxplot(size=1.2)+geom_point()
+#tip/hack
+#using jitter is a good combination with boxplot
+w+geom_boxplot(size=1.2)+geom_jitter()
+#alternate method
+w+geom_jitter()+geom_boxplot(size=1.2,alpha=0.5)
+
+
+#uisng facets
+
+x<-ggplot(data=DATA,aes(x=BudgetMillions))
+x+geom_histogram(binwidth = 10,aes(fill=Genre),color="Black")
+#histogram for every genre using facet
+x+geom_histogram(binwidth = 10,aes(fill=Genre),color="Black")+facet_grid(Genre~.,scales="free")
+#sactter plot
+s<-ggplot(data = DATA,aes(x=CriticRatings,y=AudienceRatings,color=Genre))
+s+geom_point(size=3)
+#adding facet
+s+geom_point(size=3)+facet_grid(Genre~.)
+s+geom_point(size=3)+facet_grid(Year~.)
+s+geom_point(size=3)+facet_grid(Genre~Year)#important *******
+s+geom_point(size=3)+facet_grid(Genre~Year)+geom_smooth()
+s+geom_point(size=3)+facet_grid(Genre~Year)+geom_smooth()
+s+geom_point(aes(size=BudgetMillions))+facet_grid(Genre~Year)+geom_smooth()
+#Coordinates on a plot
+#limits
+#Zoom
+l<-ggplot(data = DATA,aes(x=CriticRatings,y=AudienceRatings,size=BudgetMillions,color=Genre))
+l+geom_point()
+#adding limits
+l+geom_point()+xlim(50,100)+ylim(50,100)
+#zoom
+s+geom_point(aes(size=BudgetMillions))+facet_grid(Genre~Year)+geom_smooth()+coord_cartesian(ylim=c(0,100))
+
+#layering of the vizualization
+#adding a theme
+x<-ggplot(data=DATA,aes(x=BudgetMillions))
+x+geom_histogram(binwidth = 10,aes(fill=Genre),color="Black")
+t<-x+geom_histogram(binwidth = 10,aes(fill=Genre),color="Black")
+
+#label axis
+
+t+xlab("Money Axis")+ylab("Number of movies")
+
+#label formatting
+
+t+xlab("Money Axis")+ylab("Number of movies")+theme(axis.title.x = element_text(color= "Darkgreen",size=30),
+                                                    axis.title.y = element_text(color="Red",size=30),
+                                                    axis.text.x = element_text(size=30),
+                                                    axis.text.y= element_text(size=29))
+#legend formatting
+t+xlab("Money Axis")+ylab("Number of movies")+theme(axis.title.x = element_text(color= "Darkgreen",size=30),
+                                                    axis.title.y = element_text(color="Red",size=30),
+                                                    axis.text.x = element_text(size=20),
+                                                    axis.text.y= element_text(size=20),
+                                                    legend.title = element_text(20),
+                                                    legend.text= element_text(size=20),
+                                                    legend.position = c(1,1),
+                                                    legend.justification = c(1,1))
+#Adding title
+t+xlab("Money Axis")+ylab("Number of movies")+ggtitle("Movie budget distribution")
+  theme(axis.title.x = element_text(color= "Darkgreen",size=30),
+                                                    axis.title.y = element_text(color="Red",size=30),
+                                                    axis.text.x = element_text(size=20),
+                                                    axis.text.y= element_text(size=20),
+                                                    legend.title = element_text(20),
+                                                    legend.text= element_text(size=20),
+                                                    legend.position = c(1,1),
+                                                    legend.justification = c(1,1),
+                                                    plot.title = element_text(size=35,color="Maroon",family = "Courier"))
